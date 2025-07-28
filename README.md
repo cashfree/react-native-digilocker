@@ -16,13 +16,13 @@ A React Native SDK for integrating DigiLocker verification flows into your mobil
 ## Installation
 
 ```bash
-npm install @cashfree/react-native-digilocker react-native-webview
+npm install @cashfreepayments/react-native-digilocker react-native-webview
 ```
 
 or
 
 ```bash
-yarn add @cashfree/react-native-digilocker react-native-webview
+yarn add @cashfreepayments/react-native-digilocker react-native-webview
 ```
 
 ### iOS Setup
@@ -37,6 +37,68 @@ cd ios && pod install
 
 No additional setup required for Android.
 
+## Running the Example App
+
+The repository includes a complete example app that demonstrates how to use the DigiLocker SDK. To run the example:
+
+### Prerequisites
+
+Make sure you have the following installed:
+- Node.js (>= 16)
+- React Native development environment set up
+- iOS Simulator (for iOS) or Android emulator/device (for Android)
+- Yarn package manager
+
+### Steps to Run
+
+1. **Clone and install dependencies**:
+   ```bash
+   git clone https://github.com/cashfree/react-native-digilocker.git
+   cd react-native-digilocker
+   yarn install
+   ```
+
+2. **Navigate to the example directory**:
+   ```bash
+   cd example
+   ```
+
+3. **For iOS**:
+   ```bash
+   # Install iOS dependencies
+   cd ios && pod install && cd ..
+   
+   # Start Metro bundler
+   yarn start
+   
+   # In a new terminal, run iOS app
+   yarn ios
+   ```
+
+4. **For Android**:
+   ```bash
+   # Start Metro bundler
+   yarn start
+   
+   # In a new terminal, run Android app
+   yarn android
+   ```
+
+### Example App Features
+
+The example app demonstrates:
+- Basic DigiLocker verification flow
+- Success, error, and cancel callback handling
+- Custom styling and UI integration
+- Loading states and user feedback
+
+### Customizing the Example
+
+You can modify the example app by:
+1. Updating the DigiLocker URL in `example/src/App.tsx`
+2. Customizing the UI and styling
+3. Adding additional callback handling logic
+
 ## Usage
 
 ### Quick Start
@@ -48,7 +110,7 @@ No additional setup required for Android.
 ```tsx
 import React from 'react';
 import { View, Button, Alert } from 'react-native';
-import { useDigiLocker, DigiLockerProvider } from '@cashfree/react-native-digilocker';
+import { useDigiLocker, DigiLockerProvider } from '@cashfreepayments/react-native-digilocker';
 
 function AppContent() {
   const { verify } = useDigiLocker();
@@ -92,7 +154,7 @@ export default function App() {
 ```tsx
 import React from 'react';
 import { View, Button, Alert, StyleSheet } from 'react-native';
-import { useDigiLocker, DigiLockerProvider } from '@cashfree/react-native-digilocker';
+import { useDigiLocker, DigiLockerProvider } from '@cashfreepayments/react-native-digilocker';
 
 function VerificationScreen() {
   const { verify } = useDigiLocker();
@@ -156,7 +218,7 @@ const styles = StyleSheet.create({
 A context provider that manages the DigiLocker modal globally. **Must wrap your app or the components that use DigiLocker**.
 
 ```tsx
-import { DigiLockerProvider } from '@cashfree/react-native-digilocker';
+import { DigiLockerProvider } from '@cashfreepayments/react-native-digilocker';
 
 function App() {
   return (

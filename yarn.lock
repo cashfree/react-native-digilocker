@@ -1618,9 +1618,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cashfree/react-native-digilocker@workspace:., @cashfree/react-native-digilocker@workspace:^":
+"@cashfreepayments/react-native-digilocker@workspace:., @cashfreepayments/react-native-digilocker@workspace:^":
   version: 0.0.0-use.local
-  resolution: "@cashfree/react-native-digilocker@workspace:."
+  resolution: "@cashfreepayments/react-native-digilocker@workspace:."
   dependencies:
     "@commitlint/config-conventional": ^19.6.0
     "@eslint/compat": ^1.2.7
@@ -11074,7 +11074,7 @@ __metadata:
   resolution: "react-native-digilocker-example@workspace:example"
   dependencies:
     "@babel/core": ^7.20.0
-    "@cashfree/react-native-digilocker": "workspace:^"
+    "@cashfreepayments/react-native-digilocker": "workspace:^"
     "@expo/metro-runtime": ~5.0.4
     expo: ~53.0.20
     expo-status-bar: ~2.2.3

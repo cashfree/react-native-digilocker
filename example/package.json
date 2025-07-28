@@ -9,7 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@cashfree/react-native-digilocker": "workspace:^",
+    "@cashfreepayments/react-native-digilocker": "workspace:^",
     "@expo/metro-runtime": "~5.0.4",
     "expo": "~53.0.20",
     "expo-status-bar": "~2.2.3",

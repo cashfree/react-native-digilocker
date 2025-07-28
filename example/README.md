@@ -2,7 +2,7 @@
 
 This2. **Import the SDK**:
    ```tsx
-   import { useDigiLocker } from '@cashfree/react-native-digilocker';
+   import { useDigiLocker } from '@cashfreepayments/react-native-digilocker';
    ```mple app demonstrates how to integrate and use the CF DigiLocker SDK in a React Native application.
 
 ## Features Demonstrated
