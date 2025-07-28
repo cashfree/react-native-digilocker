@@ -16,7 +16,11 @@ interface DigiLockerContextType {
 const DigiLockerContext = createContext<DigiLockerContextType | null>(null);
 
 // Provider component that manages the modal globally
-export function DigiLockerProvider({ children }: { children: React.ReactNode }) {
+export function DigiLockerProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [isVisible, setIsVisible] = useState(false);
   const [config, setConfig] = useState<DigiLockerConfig | null>(null);
 
@@ -80,7 +84,9 @@ export function useDigiLocker() {
       context.showModal(fullConfig);
     } else {
       // Fallback: create a temporary modal if no provider is found
-      console.warn('DigiLockerProvider not found. Please wrap your app with DigiLockerProvider.');
+      console.warn(
+        'DigiLockerProvider not found. Please wrap your app with DigiLockerProvider.'
+      );
       // Could implement a fallback here or throw an error
     }
   };

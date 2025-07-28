@@ -1,5 +1,8 @@
 import { Text, View, StyleSheet, Button, Alert } from 'react-native';
-import { useDigiLocker, DigiLockerProvider } from '@cashfreepayments/react-native-digilocker';
+import {
+  useDigiLocker,
+  DigiLockerProvider,
+} from '@cashfreepayments/react-native-digilocker';
 
 // Example URL - replace with your actual DigiLocker URL
 const digiLockerUrl =
