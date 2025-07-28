@@ -81,7 +81,7 @@
     "type": "git",
     "url": "git+https://github.com/cashfree/react-native-digilocker.git"
   },
-  "author": "shimil.jas <shimil.jas@cashfree.com> (https://github.com/shimiljascf)",
+  "author": "developers@cashfree.com",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/cashfree/react-native-digilocker/issues"
