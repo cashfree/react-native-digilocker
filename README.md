@@ -265,46 +265,6 @@ verify(url, redirectUrl, {
 4. **Error messaging**: Provide clear error messages to users
 5. **Network handling**: Consider offline scenarios and network timeouts
 
-## Migration from v1.x
-
-If you're upgrading from version 1.x, here are the key changes:
-
-### Before (v1.x)
-```tsx
-const { verify, DigiLockerModal, isVisible } = useDigiLocker();
-
-return (
-  <View>
-    <Button onPress={() => verify(url)} />
-    {DigiLockerModal}
-  </View>
-);
-```
-
-### After (v2.x)
-```tsx
-// Wrap your app with provider
-function App() {
-  return (
-    <DigiLockerProvider>
-      <AppContent />
-    </DigiLockerProvider>
-  );
-}
-
-// Use in components
-function AppContent() {
-  const { verify } = useDigiLocker();
-  
-  return (
-    <View>
-      <Button onPress={() => verify(url)} />
-      {/* No need to render modal manually */}
-    </View>
-  );
-}
-```
-
 ## Troubleshooting
 
 ### Common Issues
