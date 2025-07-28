@@ -88,7 +88,8 @@
   },
   "homepage": "https://github.com/cashfree/react-native-digilocker#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^19.6.0",
