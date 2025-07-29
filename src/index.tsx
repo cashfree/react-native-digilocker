@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext } from 'react';
-import { StyleSheet, Text, View, Modal, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Modal, ActivityIndicator, TouchableOpacity, SafeAreaView } from 'react-native';
 import { WebView } from 'react-native-webview';
 import type {
   DigiLockerConfig,
@@ -102,6 +102,23 @@ function DigiLockerModalComponent({
 }: DigiLockerModalProps): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
 
+  const signInflow = config.userFlow === 'signin';
+
+  const getDigiLockerScript = () => {
+    return `
+      if (window.location.href.includes('digilocker.meripehchaan.gov.in')) {
+        function execute() {
+            document.getElementById('otherbtn').click()
+            document.getElementById('dropdownmenu').value='Aadhar'
+            document.getElementById('terms3').checked = true
+            document.getElementById('submitbtn3').disabled = false
+        }
+        execute();
+      }
+      true;
+    `;
+  };
+
   const onNavigationStateChange = (navState: any) => {
     if (
       navState.url.includes(
@@ -121,32 +138,100 @@ function DigiLockerModalComponent({
     onCancel();
   };
 
+  
+
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={handleClose}>
-      <View style={styles.webViewContainer}>
-        {isLoading && (
-          <View style={styles.loadingOverlay}>
-            <ActivityIndicator size="small" color="#0000ff" />
-            <Text>Loading...</Text>
-          </View>
-        )}
+      <SafeAreaView style={styles.container}>
+        {/* Header with back button */}
+        <View style={styles.header}>
+          <TouchableOpacity onPress={handleClose} style={styles.backButton}>
+            <Text style={styles.backArrow}>←</Text>
+            <Text style={styles.backButtonText}>Back</Text>
+          </TouchableOpacity>
+          <Text style={styles.headerTitle}>DigiLocker Verification</Text>
+          <View style={styles.headerSpacer} />
+        </View>
 
-        <WebView
-          source={{ uri: config.url }}
-          style={styles.webView}
-          javaScriptEnabled={true}
-          domStorageEnabled={true}
-          onLoadStart={() => setIsLoading(true)}
-          onLoadEnd={() => setIsLoading(false)}
-          onError={() => setIsLoading(false)}
-          onNavigationStateChange={onNavigationStateChange}
-        />
-      </View>
+        <View style={styles.webViewContainer}>
+          {isLoading && (
+            <View style={styles.loadingOverlay}>
+              <ActivityIndicator size="small" color="#0000ff" />
+              <Text>Loading...</Text>
+            </View>
+          )}
+
+          <WebView
+            source={{ uri: config.url }}
+            style={styles.webView}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            onLoadStart={() => setIsLoading(true)}
+            onLoadEnd={() => setIsLoading(false)}
+            onError={() => setIsLoading(false)}
+            onNavigationStateChange={onNavigationStateChange}
+            injectedJavaScript={signInflow ? getDigiLockerScript() : undefined}
+          />
+        </View>
+      </SafeAreaView>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 12,
+    backgroundColor: '#ffffff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#e9ecef',
+    minHeight: 56,
+  },
+  backButton: {
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: 40,
+    flexDirection: 'row',
+  },
+  backArrow: {
+    fontSize: 16,
+    color: '#000000',
+    fontWeight: '500',
+    textAlignVertical: 'center',
+    lineHeight: 20,
+    includeFontPadding: false,
+  },
+  backButtonText: {
+    fontSize: 16,
+    color: '#000000',
+    fontWeight: '500',
+    textAlignVertical: 'center',
+    lineHeight: 20,
+    includeFontPadding: false,
+    paddingLeft: 4,
+    marginTop:5
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#333',
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    flex: 1,
+  },
+  headerSpacer: {
+    width: 60, 
+    minHeight: 40,
+  },
   webViewContainer: {
     flex: 1,
     backgroundColor: 'white',
@@ -168,5 +253,5 @@ const styles = StyleSheet.create({
   },
 });
 
-// Export types
+
 export type { DigiLockerConfig, DigiLockerResult } from './types';

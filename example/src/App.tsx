@@ -6,7 +6,7 @@ import {
 
 // Example URL - replace with your actual DigiLocker URL
 const digiLockerUrl =
-  'https://verification.cashfree.com/dgl?shortCode=t340bg94ii8g';
+  'https://verification.cashfree.com/dgl?shortCode=u345o8kpg1hg';
 
 function AppContent() {
   const { verify } = useDigiLocker();
@@ -14,8 +14,9 @@ function AppContent() {
   const handleVerifyDigiLocker = () => {
     verify(
       digiLockerUrl, // The URL to load in WebView
-      'https://verification.cashfree.com/dgl/status', // Optional redirect URL
+      'https://verification.cashfree.com/dgl/status',
       {
+        userFlow: 'signin',
         onSuccess: (data: any) => {
           Alert.alert(
             'Success',
@@ -34,6 +35,7 @@ function AppContent() {
 
   const handleVerifyWithDefaultRedirect = () => {
     verify(digiLockerUrl, undefined, {
+      userFlow: 'signin',
       onSuccess: (data: any) => {
         Alert.alert(
           'Success',

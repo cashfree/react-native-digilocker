@@ -1,6 +1,7 @@
 export interface DigiLockerConfig {
   url: string;
   redirectUrl?: string;
+  userFlow?: 'signin' | 'signup';
   onSuccess?: (data: any) => void;
   onError?: (error: string) => void;
   onCancel?: () => void;

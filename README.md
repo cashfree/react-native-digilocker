@@ -87,7 +87,9 @@ Make sure you have the following installed:
 ### Example App Features
 
 The example app demonstrates:
-- Basic DigiLocker verification flow
+- Basic DigiLocker verification flow with custom redirect URL
+- Verification flow with default redirect URL
+- User flow configuration (signin/signup)
 - Success, error, and cancel callback handling
 - Custom styling and UI integration
 - Loading states and user feedback
@@ -96,8 +98,9 @@ The example app demonstrates:
 
 You can modify the example app by:
 1. Updating the DigiLocker URL in `example/src/App.tsx`
-2. Customizing the UI and styling
-3. Adding additional callback handling logic
+2. Changing the `userFlow` parameter ('signin' or 'signup')
+3. Customizing the UI and styling
+4. Adding additional callback handling logic
 
 ## Usage
 
@@ -117,9 +120,10 @@ function AppContent() {
 
   const handleVerify = () => {
     verify(
-      'https://verification.cashfree.com/dgl?shortCode=your-short-code',
+      'https://verification.cashfree.com/dgl?shortCode=z345md9dg1hg',
       'https://verification.cashfree.com/dgl/status', // Optional redirect URL
       {
+        userFlow: 'signin',
         onSuccess: (data) => {
           Alert.alert('Success', `Verification successful: ${JSON.stringify(data)}`);
         },
@@ -161,9 +165,10 @@ function VerificationScreen() {
 
   const handleCustomVerification = () => {
     verify(
-      'https://your-digilocker-url.com',
-      undefined, // Uses default redirect URL
+      'https://verification.cashfree.com/dgl?shortCode=z345md9dg1hg',
+      'https://verification.cashfree.com/dgl/status', // Custom redirect URL
       {
+        userFlow: 'signin',
         onSuccess: (data) => {
           // Handle successful verification
           console.log('Verification data:', data);
@@ -244,6 +249,7 @@ verify(
   url: string,                    // DigiLocker URL to load
   redirectUrl?: string,           // Optional redirect URL (default: 'https://verification.cashfree.com/dgl/status')
   options?: {
+    userFlow?: 'signin' | 'signup';      // Optional user flow type (restricted to 'signin' or 'signup')
     onSuccess?: (data: any) => void;     // Success callback
     onError?: (error: string) => void;   // Error callback
     onCancel?: () => void;               // Cancel callback
@@ -257,6 +263,7 @@ verify(
 export interface DigiLockerConfig {
   url: string;
   redirectUrl?: string;
+  userFlow?: 'signin' | 'signup';  // Restricted to only 'signin' or 'signup'
   onSuccess?: (data: any) => void;
   onError?: (error: string) => void;
   onCancel?: () => void;
@@ -281,6 +288,13 @@ export interface DigiLockerResult {
 ### Default Redirect URL
 
 The SDK uses `https://verification.cashfree.com/dgl/status` as the default redirect URL. When the WebView navigates to a URL containing this pattern, the verification is considered complete.
+
+### User Flow Configuration
+
+The `userFlow` parameter accepts only two values:
+- **`'signin'`** - For existing user authentication flows
+- **`'signup'`** - For new user registration flows
+
 
 ### Modal Behavior
 
@@ -323,9 +337,10 @@ verify(url, redirectUrl, {
 
 1. **Always wrap with Provider**: Ensure `DigiLockerProvider` wraps components using `useDigiLocker`
 2. **Handle all callbacks**: Implement `onSuccess`, `onError`, and `onCancel` for better user experience
-3. **Test with real URLs**: Use actual DigiLocker URLs for testing
-4. **Error messaging**: Provide clear error messages to users
-5. **Network handling**: Consider offline scenarios and network timeouts
+3. **Use correct userFlow**: Only use `'signin'` or `'signup'` for the `userFlow` parameter
+4. **Test with real URLs**: Use actual DigiLocker URLs for testing
+5. **Error messaging**: Provide clear error messages to users
+6. **Network handling**: Consider offline scenarios and network timeouts
 
 ## Troubleshooting
 
