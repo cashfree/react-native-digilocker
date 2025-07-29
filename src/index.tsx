@@ -1,11 +1,13 @@
 import React, { useState, createContext, useContext } from 'react';
-import { StyleSheet, Text, View, Modal, ActivityIndicator, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, View, Modal, ActivityIndicator, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { WebView } from 'react-native-webview';
 import type {
   DigiLockerConfig,
   DigiLockerResult,
   DigiLockerModalProps,
 } from './types';
+
+const defaultRedirectUrl = 'https://verification.cashfree.com/dgl/status';
 
 // Global context for managing the modal
 interface DigiLockerContextType {
@@ -75,8 +77,7 @@ export function useDigiLocker() {
   ) => {
     const fullConfig: DigiLockerConfig = {
       url,
-      redirectUrl:
-        redirectUrl || 'https://verification.cashfree.com/dgl/status',
+      redirectUrl: redirectUrl || defaultRedirectUrl,
       ...options,
     };
 
@@ -87,7 +88,6 @@ export function useDigiLocker() {
       console.warn(
         'DigiLockerProvider not found. Please wrap your app with DigiLockerProvider.'
       );
-      // Could implement a fallback here or throw an error
     }
   };
 
@@ -120,11 +120,7 @@ function DigiLockerModalComponent({
   };
 
   const onNavigationStateChange = (navState: any) => {
-    if (
-      navState.url.includes(
-        config.redirectUrl || 'https://verification.cashfree.com/dgl/status'
-      )
-    ) {
+    if (navState.url.includes(config.redirectUrl || defaultRedirectUrl)) {
       setTimeout(() => {
         onResult({
           success: true,
@@ -142,14 +138,13 @@ function DigiLockerModalComponent({
 
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={handleClose}>
+      <StatusBar barStyle="dark-content" backgroundColor="white" translucent={false} />
       <SafeAreaView style={styles.container}>
-        {/* Header with back button */}
         <View style={styles.header}>
           <TouchableOpacity onPress={handleClose} style={styles.backButton}>
             <Text style={styles.backArrow}>←</Text>
             <Text style={styles.backButtonText}>Back</Text>
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>DigiLocker Verification</Text>
           <View style={styles.headerSpacer} />
         </View>
 

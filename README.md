@@ -1,4 +1,4 @@
-# React Native CF DigiLocker
+# React Native DigiLocker Verification
 
 A React Native SDK for integrating DigiLocker verification flows into your mobile applications. This SDK provides a simple WebView-based solution for handling DigiLocker verification workflows with customizable callbacks and redirect handling.
 

@@ -6,7 +6,7 @@ import {
 
 // Example URL - replace with your actual DigiLocker URL
 const digiLockerUrl =
-  'https://verification.cashfree.com/dgl?shortCode=u345o8kpg1hg';
+  'https://verification.cashfree.com/dgl?shortCode=d345um5sa1hg';
 
 function AppContent() {
   const { verify } = useDigiLocker();
