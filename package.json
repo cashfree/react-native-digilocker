@@ -1,6 +1,6 @@
 {
   "name": "@cashfreepayments/react-native-digilocker",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A React Native SDK for integrating DigiLocker verification flows into mobile applications",
   "main": "./lib/module/index.js",
   "types": "./lib/typescript/src/index.d.ts",
