@@ -1,5 +1,14 @@
 import React, { useState, createContext, useContext } from 'react';
-import { StyleSheet, Text, View, Modal, ActivityIndicator, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Modal,
+  ActivityIndicator,
+  TouchableOpacity,
+  SafeAreaView,
+  StatusBar,
+} from 'react-native';
 import { WebView } from 'react-native-webview';
 import type {
   DigiLockerConfig,
@@ -7,7 +16,15 @@ import type {
   DigiLockerModalProps,
 } from './types';
 
-const defaultRedirectUrl = 'https://verification.cashfree.com/dgl/status';
+// Default listener URLs for environments
+const PROD_LISTENER_URL = 'https://verification.cashfree.com/dgl/status';
+const SBOX_LISTENER_URL = 'https://verification-test.cashfree.com/dgl/status';
+
+// Helper to get listener URL based on DigiLocker URL domain
+function getListenerUrlFromUrl(url: string) {
+  if (url.includes('verification-test.cashfree.com')) return SBOX_LISTENER_URL;
+  return PROD_LISTENER_URL;
+}
 
 // Global context for managing the modal
 interface DigiLockerContextType {
@@ -70,14 +87,21 @@ export function DigiLockerProvider({
 export function useDigiLocker() {
   const context = useContext(DigiLockerContext);
 
+  /**
+   * @param url DigiLocker URL to load
+   * @param redirectUrl Optional custom redirect URL
+   * @param options DigiLockerConfig options
+   *        Listener URL is auto-detected from the DigiLocker URL domain
+   */
   const verify = (
     url: string,
     redirectUrl?: string,
     options?: Partial<DigiLockerConfig>
   ) => {
+    const listenerUrl = getListenerUrlFromUrl(url);
     const fullConfig: DigiLockerConfig = {
       url,
-      redirectUrl: redirectUrl || defaultRedirectUrl,
+      redirectUrl: redirectUrl || listenerUrl,
       ...options,
     };
 
@@ -134,11 +158,13 @@ function DigiLockerModalComponent({
     onCancel();
   };
 
-  
-
   return (
     <Modal visible={visible} animationType="slide" onRequestClose={handleClose}>
-      <StatusBar barStyle="dark-content" backgroundColor="white" translucent={false} />
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="white"
+        translucent={false}
+      />
       <SafeAreaView style={styles.container}>
         <View style={styles.header}>
           <TouchableOpacity onPress={handleClose} style={styles.backButton}>
@@ -213,7 +239,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     includeFontPadding: false,
     paddingLeft: 4,
-    marginTop:5
+    marginTop: 5,
   },
   headerTitle: {
     fontSize: 18,
@@ -224,7 +250,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   headerSpacer: {
-    width: 60, 
+    width: 60,
     minHeight: 40,
   },
   webViewContainer: {
@@ -247,6 +273,5 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
 });
-
 
 export type { DigiLockerConfig, DigiLockerResult } from './types';
