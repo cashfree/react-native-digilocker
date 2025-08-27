@@ -143,6 +143,8 @@ function DigiLockerModalComponent({
     `;
   };
 
+  const defaultRedirectUrl = PROD_LISTENER_URL;
+
   const onNavigationStateChange = (navState: any) => {
     if (navState.url.includes(config.redirectUrl || defaultRedirectUrl)) {
       setTimeout(() => {
